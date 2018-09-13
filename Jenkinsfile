@@ -38,7 +38,7 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                     sh "helm init --client-only"
 
-                    sh "helm repo add meltingpoc-charts https://helloworld-k8s.github.io/charts"
+                    sh "helm repo add helloworld-charts https://helloworld-k8s.github.io/charts"
 
                     def platform = params.env == 'prod' ? '' : '-' + params.env
 
