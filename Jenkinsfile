@@ -40,15 +40,19 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                     sh "helm repo add helloworld-charts https://helloworld-k8s.github.io/charts"
 
+
+
                     def platform = params.env == 'prod' ? '' : '-' + params.env
+
+                    def release = params.chart + "-" + params.env
 
                     def url = params.alias == '' ? "${params.chart}${platform}.k8.wildwidewest.xyz" : "${params.alias}${platform}.k8.wildwidewest.xyz"
 
-                    def options = "--namespace ${params.env} --set-string env=${platform} --set-string image.tag=${params.image} helloworld-charts/${params.chart} --set ingress.hosts[0]=${url},ingress.tls[0].hosts[0]=${url}"
+                    def options = "--namespace ${params.env} --set-string env=${platform} --set-string image.tag=${params.image} helloworld-charts/${release} --set ingress.hosts[0]=${url},ingress.tls[0].hosts[0]=${url}"
 
-                    sh "if [ `helm list --namespace ${params.env} | grep ^${params.chart} | wc -l` == '0' ]; then helm install --name ${params.chart} ${options}; fi"
+                    sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '0' ]; then helm install --name ${release} ${options}; fi"
 
-                    sh "if [ `helm list --namespace ${params.env} | grep ^${params.chart} | wc -l` == '1' ]; then helm upgrade ${params.chart} ${options}; fi"
+                    sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '1' ]; then helm upgrade ${release} ${options}; fi"
                 }
             }
         }
