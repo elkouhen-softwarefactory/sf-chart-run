@@ -7,7 +7,7 @@ podTemplate(label: 'chart-run-pod', containers: [
         // le slave jenkins
         containerTemplate(name: 'jnlp', image: 'jenkinsci/jnlp-slave:alpine'),
 
-        containerTemplate(name: 'helm', image: 'linkyard/docker-helm:v2.9.1', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'helm', image: 'dtzar/helm-kubectl:2.9.1', ttyEnabled: true, command: 'cat'),
 
         // un conteneur pour déployer les services kubernetes
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', command: 'cat', ttyEnabled: true)],
