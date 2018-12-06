@@ -7,7 +7,7 @@ podTemplate(label: 'chart-run-pod', containers: [
         // le slave jenkins
         containerTemplate(name: 'jnlp', image: 'jenkinsci/jnlp-slave:alpine'),
 
-        containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.9.1', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'helm', image: 'linkyard/docker-helm:v2.9.1', ttyEnabled: true, command: 'cat'),
 
         // un conteneur pour déployer les services kubernetes
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', command: 'cat', ttyEnabled: true)],
@@ -42,7 +42,7 @@ podTemplate(label: 'chart-run-pod', containers: [
                     sh "helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts"
 
                     sh "helm plugin install https://github.com/futuresimple/helm-secrets"
-                    
+
                     def platform = params.env == 'prod' ? '' : '-' + params.env
 
                     def release = params.chart + "-" + params.env
