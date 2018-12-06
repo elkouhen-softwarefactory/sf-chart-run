@@ -36,10 +36,13 @@ podTemplate(label: 'chart-run-pod', containers: [
             stage('upgrade') {
                 withCredentials([string(credentialsId: 'registry_url', variable: 'registry_url')]) {
 
+
                     sh "helm init --client-only"
 
                     sh "helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts"
 
+                    sh "helm plugin install https://github.com/futuresimple/helm-secrets"
+                    
                     def platform = params.env == 'prod' ? '' : '-' + params.env
 
                     def release = params.chart + "-" + params.env
