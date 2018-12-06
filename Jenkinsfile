@@ -38,7 +38,7 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                     sh "helm init --client-only"
 
-                    sh "helm repo add helloworld-charts https://helloworld-k8s.github.io/charts"
+                    sh "helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts"
 
                     def platform = params.env == 'prod' ? '' : '-' + params.env
 
@@ -46,7 +46,7 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                     def url = params.alias == '' ? "${params.chart}${platform}.k8.wildwidewest.xyz" : "${params.alias}${platform}.k8.wildwidewest.xyz"
 
-                    def options = "--namespace ${params.env} --set-string env=${platform},image.tag=${params.image} helloworld-charts/${params.chart} --set ingress.hosts[0]=${url},ingress.tls[0].hosts[0]=${url}"
+                    def options = "--namespace ${params.env} --set-string env=${platform},image.tag=${params.image} softeamouest-opus-charts/${params.chart} --set ingress.hosts[0]=${url},ingress.tls[0].hosts[0]=${url}"
 
                     sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '0' ]; then helm install --name ${release} ${options}; fi"
 
