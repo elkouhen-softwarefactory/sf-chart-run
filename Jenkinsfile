@@ -38,7 +38,8 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                     ]) {
 
-                        sh "gpg --import secret.asc"
+
+                        sh "GPG_OPTIONS='--no-show-photos --pinentry-mode loopback' gpg --import secret.asc"
 
                         sh "helm init --client-only"
 
