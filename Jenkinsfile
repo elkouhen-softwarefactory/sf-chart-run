@@ -38,7 +38,7 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                     ]) {
 
-                        sh "pgp --import pgp-helm.asc --passphrase ${pgp_helm_pwd}"
+                        sh "gnupg --import pgp-helm.asc --passphrase ${pgp_helm_pwd}"
 
                         sh "helm init --client-only"
 
