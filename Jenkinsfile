@@ -1,6 +1,5 @@
 #!groovy
 
-
 // pod utilisé pour la compilation du projet
 podTemplate(label: 'chart-run-pod', containers: [
 
@@ -31,24 +30,33 @@ podTemplate(label: 'chart-run-pod', containers: [
         container('helm') {
 
             stage('upgrade') {
-                withCredentials([string(credentialsId: 'registry_url', variable: 'registry_url')]) {
 
+                withCredentials([string(credentialsId: 'registry_url', variable: 'registry_url'),
+                                 string(credentialsId: 'pgp_helm_pwd', variable: 'pgp_helm_pwd')]) {
 
-                    sh "helm init --client-only"
+                    configFileProvider([configFile(fileId: 'pgp-helm', targetLocation: "pgp-helm.asc")
 
-                    sh "helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts"
+                    ]) {
 
-                    def platform = params.env == 'prod' ? '' : '-' + params.env
+                        sh "pgp --import pgp-helm.asc --passphrase ${pgp_helm_pwd}"
 
-                    def release = params.chart + "-" + params.env
+                        sh "helm init --client-only"
 
-                    def url = params.alias == '' ? "${params.chart}${platform}.k8.wildwidewest.xyz" : "${params.alias}${platform}.k8.wildwidewest.xyz"
+                        sh "helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts"
 
-                    def options = "--namespace ${params.env} --set-string env=${platform},image.tag=${params.image} softeamouest-opus-charts/${params.chart} --set ingress.hosts[0]=${url},ingress.tls[0].hosts[0]=${url}"
+                        def platform = params.env == 'prod' ? '' : '-' + params.env
 
-                    sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '0' ]; then helm install --name ${release} ${options}; fi"
+                        def release = params.chart + "-" + params.env
 
-                    sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '1' ]; then helm upgrade ${release} ${options}; fi"
+                        def url = params.alias == '' ? "${params.chart}${platform}.k8.wildwidewest.xyz" : "${params.alias}${platform}.k8.wildwidewest.xyz"
+
+                        def options = "--namespace ${params.env} --values secrets.yaml --set-string env=${platform},image.tag=${params.image} softeamouest-opus-charts/${params.chart} --set ingress.hosts[0]=${url},ingress.tls[0].hosts[0]=${url}"
+
+                        sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '0' ]; then helm secrets install --name ${release} ${options}; fi"
+
+                        sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '1' ]; then helm secrets upgrade ${release} ${options}; fi"
+                    }
+
                 }
             }
         }
