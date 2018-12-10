@@ -46,6 +46,8 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         sh "helm init --client-only"
 
+                        sh "helm plugin install https://github.com/futuresimple/helm-secrets"
+                        
                         sh "helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts"
 
                         def platform = params.env == 'prod' ? '' : '-' + params.env
