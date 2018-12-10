@@ -7,7 +7,7 @@ podTemplate(label: 'chart-run-pod', containers: [
         // le slave jenkins
         containerTemplate(name: 'jnlp', image: 'jenkinsci/jnlp-slave:alpine'),
 
-        containerTemplate(name: 'helm', image: 'elkouhen/k8s-helm:2.9.1', ttyEnabled: true, command: 'cat')],
+        containerTemplate(name: 'helm', image: 'elkouhen/k8s-helm:2.9.1b', ttyEnabled: true, command: 'cat')],
 
         // montage nécessaire pour que le conteneur docker fonction (Docker In Docker)
         volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]
@@ -33,11 +33,8 @@ podTemplate(label: 'chart-run-pod', containers: [
             stage('upgrade') {
                 withCredentials([string(credentialsId: 'registry_url', variable: 'registry_url')]) {
 
-                    sh "helm init --client-only"
 
                     sh "helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts"
-
-                    sh "helm plugin install https://github.com/futuresimple/helm-secrets"
 
                     def platform = params.env == 'prod' ? '' : '-' + params.env
 
