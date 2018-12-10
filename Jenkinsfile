@@ -38,6 +38,8 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                     ]) {
 
+                        sh "mkdir /home/jenkins/.gnupg"
+                        
                         sh "echo allow-loopback-pinentry > /home/jenkins/.gnupg/gpg-agent.conf"
 
                         sh "GPG_OPTIONS='--no-show-photos --pinentry-mode loopback' gpg --no-tty --import secret.asc"
