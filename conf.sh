@@ -1,18 +1,16 @@
 #!/bin/sh -x
 
-mkdir /home/jenkins/.gnupg
-chmod 600 /home/jenkins/.gnupg
+mkdir ~/.gnupg
+chmod 600 ~/.gnupg
 
-echo use-agent >> /home/jenkins/.gnupg/gpg.conf
-echo pinentry-mode loopback >> /home/jenkins/.gnupg/gpg.conf
+echo use-agent >> ~/.gnupg/gpg.conf
+echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
 echo no-tty >> ~/.gnupg/gpg.conf
-echo allow-loopback-pinentry >> /home/jenkins/.gnupg/gpg-agent.conf
+echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
 
 gpgconf --reload gpg-agent
 
-echo export GPG_TTY=$(tty) >> ~/.profile
-
-gpg --batch --import secret.asc
+gpg -v --batch --import secret.asc
 gpg --version
 gpg --list-keys
 
