@@ -50,6 +50,8 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         sh "GPG_OPTIONS='--no-show-photos --pinentry-mode loopback' gpg --batch --import secret.asc"
 
+                        sh "gpg --list-keys"
+
                         sh "helm init --client-only"
 
                         sh "helm plugin install https://github.com/futuresimple/helm-secrets"
