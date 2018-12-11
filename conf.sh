@@ -19,3 +19,5 @@ helm plugin install https://github.com/futuresimple/helm-secrets
 helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts
 
 sops --version
+
+helm secrets install --name books-api-dev --namespace dev --values books-api/dev/values.yaml --values books-api/dev/secrets.yaml softeamouest-opus-charts/books-api

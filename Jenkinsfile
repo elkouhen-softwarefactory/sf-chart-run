@@ -44,11 +44,11 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         def release = params.chart + "-" + params.env
 
-                        def options = "--namespace ${params.env} --values ${params.chart}/${params.env}/values.yaml --values ${params.chart}/${params.env}/secrets.yaml"
+                        /* def options = "--namespace ${params.env} --values ${params.chart}/${params.env}/values.yaml --values ${params.chart}/${params.env}/secrets.yaml"
 
                         sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '0' ]; then helm secrets install --name ${release} ${options} softeamouest-opus-charts/${params.chart}; fi"
 
-                        sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '1' ]; then helm secrets upgrade ${release} softeamouest-opus-charts/${params.chart}; fi"
+                        sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '1' ]; then helm secrets upgrade ${release} softeamouest-opus-charts/${params.chart}; fi" */
                     }
                 }
             }
