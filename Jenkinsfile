@@ -46,8 +46,6 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         sh "gpgconf --reload gpg-agent"
 
-                        sh "
-
                         sh "helm init --client-only"
 
                         sh "helm plugin install https://github.com/futuresimple/helm-secrets"
