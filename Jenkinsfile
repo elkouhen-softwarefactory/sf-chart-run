@@ -46,7 +46,9 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         sh "gpgconf --reload gpg-agent"
 
-                        sh 'echo export GPG_TTY=/dev/tty >> ~/.profile'
+                        sh "echo no-tty >> ~/.gnupg/gpg.conf"
+
+                        //sh 'echo export GPG_TTY=/dev/tty >> ~/.profile'
 
                         sh "GPG_OPTIONS='--no-show-photos --pinentry-mode loopback' gpg --batch --import secret.asc"
 
