@@ -40,13 +40,15 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         sh "mkdir /home/jenkins/.gnupg"
 
-                        sh "echo allow-loopback-pinentry > /home/jenkins/.gnupg/gpg-agent.conf"
+                        sh "chmod 600 /home/jenkins/.gnupg"
 
-                        sh "GPG_OPTIONS='--no-show-photos --pinentry-mode loopback' gpg --batch --import secret.asc"
+                        sh "echo allow-loopback-pinentry > /home/jenkins/.gnupg/gpg-agent.conf"
 
                         sh "gpgconf --reload gpg-agent"
 
                         sh 'echo export GPG_TTY=/dev/tty >> ~/.profile'
+
+                        sh "GPG_OPTIONS='--no-show-photos --pinentry-mode loopback' gpg --batch --import secret.asc"
 
                         sh "helm init --client-only"
 
