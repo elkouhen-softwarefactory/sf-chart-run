@@ -44,6 +44,10 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         sh "GPG_OPTIONS='--no-show-photos --pinentry-mode loopback' gpg --batch --import secret.asc"
 
+                        sh "gpgconf --reload gpg-agent"
+
+                        sh "
+
                         sh "helm init --client-only"
 
                         sh "helm plugin install https://github.com/futuresimple/helm-secrets"
@@ -54,9 +58,9 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         def options = "--namespace ${params.env} --values ${params.chart}/${params.env}/values.yaml --values ${params.chart}/${params.env}/secrets.yaml"
 
-                        sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '0' ]; then helm secrets install --name ${release} ${options} softeamouest-opus-charts/${params.chart}; fi"
+                        sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '0' ]; then GPG_TTY=$(tty) helm secrets install --name ${release} ${options} softeamouest-opus-charts/${params.chart}; fi"
 
-                        sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '1' ]; then helm secrets upgrade ${release} softeamouest-opus-charts/${params.chart}; fi"
+                        sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '1' ]; then GPG_TTY=$(tty) helm secrets upgrade ${release} softeamouest-opus-charts/${params.chart}; fi"
                     }
                 }
             }
