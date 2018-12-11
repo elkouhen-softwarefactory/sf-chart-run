@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 
 mkdir /home/jenkins/.gnupg
 chmod 600 /home/jenkins/.gnupg
