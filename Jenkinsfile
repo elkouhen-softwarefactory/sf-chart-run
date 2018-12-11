@@ -38,29 +38,7 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                     ]) {
 
-                        sh "mkdir /home/jenkins/.gnupg"
-                        sh "chmod 600 /home/jenkins/.gnupg"
-
-                        sh "echo use-agent >> /home/jenkins/.gnupg/gpg.conf"
-                        sh "echo pinentry-mode loopback >> /home/jenkins/.gnupg/gpg.conf"
-                        sh "echo no-tty >> ~/.gnupg/gpg.conf"
-                        sh "echo allow-loopback-pinentry >> /home/jenkins/.gnupg/gpg-agent.conf"
-
-                        sh "gpgconf --reload gpg-agent"
-
-                        //sh 'echo export GPG_TTY=/dev/tty >> ~/.profile'
-
-                        sh "gpg --batch --import secret.asc"
-
-                        sh "gpg --version"
-
-                        sh "gpg --list-keys"
-
-                        sh "helm init --client-only"
-
-                        sh "helm plugin install https://github.com/futuresimple/helm-secrets"
-
-                        sh "helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts"
+                        sh "./conf.sh"
 
                         def release = params.chart + "-" + params.env
 
