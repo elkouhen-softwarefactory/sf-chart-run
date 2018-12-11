@@ -46,7 +46,7 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         sh "gpgconf --reload gpg-agent"
 
-                        sh 'echo export GPG_TTY=$(tty) >> ~/.profile'
+                        sh 'echo export GPG_TTY=/dev/tty >> ~/.profile'
 
                         sh "helm init --client-only"
 
