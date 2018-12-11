@@ -10,7 +10,7 @@ echo allow-loopback-pinentry >> /home/jenkins/.gnupg/gpg-agent.conf
 
 gpgconf --reload gpg-agent
 
-//sh 'echo export GPG_TTY=/dev/tty >> ~/.profile'
+echo export GPG_TTY=$(tty) >> ~/.profile
 
 gpg --batch --import secret.asc
 gpg --version

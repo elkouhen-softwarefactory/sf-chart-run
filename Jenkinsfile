@@ -39,7 +39,7 @@ podTemplate(label: 'chart-run-pod', containers: [
                     ]) {
 
                         sh "chmod u+x ./conf.sh"
-                        
+
                         sh "./conf.sh"
 
                         def release = params.chart + "-" + params.env
