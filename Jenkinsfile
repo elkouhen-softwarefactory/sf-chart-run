@@ -50,6 +50,8 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         sh "helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts"
 
+                        def release = params.chart + "-" + params.env
+
                         def options = "--namespace ${params.env} --values ${params.chart}/${params.env}/values.yaml --values ${params.chart}/${params.env}/secret.yaml"
 
                         sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '0' ]; then helm secrets install --name ${release} ${options}; fi"
