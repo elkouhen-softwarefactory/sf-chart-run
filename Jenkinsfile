@@ -56,7 +56,7 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '0' ]; then helm secrets install --name ${release} ${options}; fi"
 
-                        sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '1' ]; then helm secrets upgrade ${release} ${options}; fi"
+                        sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '1' ]; then helm secrets upgrade ${release} softeamouest-opus-charts/books-api; fi"
                     }
                 }
             }
