@@ -1,0 +1,6 @@
+ingress:
+  hosts:
+  - books-api-dev.k8.wildwidewest.xyz
+  tls:
+  - hosts:
+    - books-api-dev.k8.wildwidewest.xyz

@@ -50,19 +50,12 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         sh "helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts"
 
-                        def platform = params.env == 'prod' ? '' : '-' + params.env
-
-                        def release = params.chart + "-" + params.env
-
-                        def url = params.alias == '' ? "${params.chart}${platform}.k8.wildwidewest.xyz" : "${params.alias}${platform}.k8.wildwidewest.xyz"
-
-                        def options = "--namespace ${params.env} --set-string env=${platform},image.tag=${params.image} softeamouest-opus-charts/${params.chart} --set ingress.hosts[0]=${url},ingress.tls[0].hosts[0]=${url}"
+                        def options = "--namespace ${params.env} --values ${params.chart}/${params.env}/values.yaml --values ${params.chart}/${params.env}/secret.yaml"
 
                         sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '0' ]; then helm secrets install --name ${release} ${options}; fi"
 
                         sh "if [ `helm list --namespace ${params.env} | grep ^${release} | wc -l` == '1' ]; then helm secrets upgrade ${release} ${options}; fi"
                     }
-
                 }
             }
         }
