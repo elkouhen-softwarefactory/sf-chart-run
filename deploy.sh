@@ -1,4 +1,20 @@
-#!/bin/sh -x
+#!/bin/bash -x
+
+while getopts "e:c:i:" arg; do
+  case $arg in
+    e)
+      env=$OPTARG
+      ;;
+    c)
+      chart=$OPTARG
+      ;;
+    i)
+      image=$OPTARG
+      ;;
+  esac
+done
+
+release="${chart}-${env}"
 
 mkdir ~/.gnupg
 chmod 700 ~/.gnupg
@@ -24,4 +40,14 @@ helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/chart
 
 sops --version
 
-helm secrets install --name books-api-dev --namespace dev --values books-api/dev/values.yaml --values books-api/dev/secrets.yaml softeamouest-opus-charts/books-api
+options="--namespace ${env} --values ${chart}/${env}/values.yaml --values ${chart}/${env}/secrets.yaml --set-string image.tag=${image}"
+
+nbRelease=`helm list --namespace ${env} | grep ^${release} | wc -l`
+
+if [ $nbRelease=='0' ]; then
+    helm secrets install --name ${release} ${options} softeamouest-opus-charts/${chart};
+fi
+
+if [ $nbRelease=='1' ]; then
+    helm secrets upgrade ${release} softeamouest-opus-charts/${chart} ${options};
+fi
