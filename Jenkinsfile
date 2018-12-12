@@ -18,7 +18,6 @@ podTemplate(label: 'chart-run-pod', containers: [
                 parameters([
                         string(defaultValue: 'latest', description: 'Version à déployer', name: 'image'),
                         string(defaultValue: '', description: 'Nom du chart à deployer', name: 'chart'),
-                        string(defaultValue: '', description: 'URL de l application', name: 'alias'),
                         string(defaultValue: 'dev', description: 'Environnement de déploiement', name: 'env')
                 ])
         ])
@@ -29,18 +28,17 @@ podTemplate(label: 'chart-run-pod', containers: [
 
         container('helm') {
 
-            stage('upgrade') {
+            stage('helm deploy') {
 
-                withCredentials([string(credentialsId: 'registry_url', variable: 'registry_url'),
-                                 string(credentialsId: 'pgp_helm_pwd', variable: 'pgp_helm_pwd')]) {
+                withCredentials([string(credentialsId: 'pgp_helm_pwd', variable: 'pgp_helm_pwd')]) {
 
-                    configFileProvider([configFile(fileId: 'pgp-helm', targetLocation: "pgp-helm.asc")
+                    configFileProvider([configFile(fileId: 'pgp-helm', targetLocation: "secret.asc")
 
                     ]) {
 
                         sh "chmod u+x ./deploy.sh"
 
-                        sh "./deploy.sh -e ${params.env} -c ${params.chart}"
+                        sh "./deploy.sh -e ${params.env} -c ${params.chart} -p ${pgp_helm_pwd}"
                     }
                 }
             }

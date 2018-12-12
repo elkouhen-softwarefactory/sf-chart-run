@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-while getopts "e:c:i:" arg; do
+while getopts "e:c:i:p:" arg; do
   case $arg in
     e)
       env=$OPTARG
@@ -10,6 +10,9 @@ while getopts "e:c:i:" arg; do
       ;;
     i)
       image=$OPTARG
+      ;;
+    p)
+      password=$OPTARG
       ;;
   esac
 done
@@ -26,8 +29,8 @@ echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
 
 gpgconf --reload gpg-agent
 
-echo softeam44 | gpg2 --batch --import secret.asc
-echo softeam44 > key.txt
+echo ${password} | gpg2 --batch --import secret.asc
+echo ${password} > key.txt
 touch dummy.txt
 gpg --batch --yes --passphrase-file key.txt --pinentry-mode=loopback -s dummy.txt # sign dummy file to unlock agent
 
