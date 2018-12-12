@@ -1,11 +1,11 @@
 #!/bin/sh -x
 
 mkdir ~/.gnupg
-chmod 600 ~/.gnupg
+chmod 700 ~/.gnupg
 
 echo use-agent >> ~/.gnupg/gpg.conf
 echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
-echo no-tty >> ~/.gnupg/gpg.conf
+#echo no-tty >> ~/.gnupg/gpg.conf
 echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
 
 gpgconf --reload gpg-agent
