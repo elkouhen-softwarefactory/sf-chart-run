@@ -4,3 +4,5 @@ ingress:
   tls:
   - hosts:
     - books-api-dev.k8.wildwidewest.xyz
+    secretName: books-api-dev-secret
+  secretName: books-api-dev-secret
