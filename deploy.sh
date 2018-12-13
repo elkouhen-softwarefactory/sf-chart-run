@@ -20,12 +20,15 @@ done
 mkdir ~/.gnupg
 chmod 700 ~/.gnupg
 
-echo use-agent >> ~/.gnupg/gpg.conf
-echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
-#echo no-tty >> ~/.gnupg/gpg.conf
-echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
+#echo use-agent >> ~/.gnupg/gpg.conf
+#echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
+#echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
 
-gpgconf --reload gpg-agent
+#gpgconf --reload gpg-agent
+
+gpg --version
+sops --version
+helm version
 
 echo ${password} | gpg2 --batch --import secret.asc
 echo ${password} > key.txt
@@ -35,9 +38,6 @@ gpg --batch --yes --passphrase-file key.txt --pinentry-mode=loopback -s dummy.tx
 helm init --client-only
 helm plugin install https://github.com/futuresimple/helm-secrets
 helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts
-
-gpg --version
-sops --version
 
 application="helm"
 

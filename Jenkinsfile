@@ -28,17 +28,14 @@ podTemplate(label: 'chart-run-pod', containers: [
 
         container('helm') {
 
-            stage('helm deploy') {
+            stage('DEPLOY') {
 
                 withCredentials([string(credentialsId: 'pgp_helm_pwd', variable: 'pgp_helm_pwd')]) {
 
                     configFileProvider([configFile(fileId: 'pgp-helm', targetLocation: "secret.asc")
 
                     ]) {
-
-                        sh "chmod u+x ./deploy.sh"
-
-                        sh "./deploy.sh -e ${params.env} -c ${params.chart} -p ${pgp_helm_pwd}"
+                        sh "./deploy.sh -e ${params.env} -c ${params.chart} -p ${pgp_helm_pwd} -i ${params.image}"
                     }
                 }
             }
