@@ -1,7 +1,5 @@
 #!/bin/bash -x
 
-env="default"
-
 while getopts "e:c:i:p:" arg; do
   case $arg in
     e)
@@ -46,7 +44,9 @@ helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/chart
 sops --version
 
 application="helm"
-options="--namespace ${env} "
+options=""
+
+[ -z "$env" ] || options="$options --namespace ${env} "
 
 [ -z "$image" ] || options="$options --set-string image.tag=${image} "
 
@@ -55,6 +55,8 @@ test -e ${chart}/${env}/secrets.yaml && options="$options --values ${chart}/${en
 test -e ${chart}/${env}/secrets.yaml && application="$application secrets"
 
 test -e ${chart}/${env}/values.yaml  && options="$options --values ${chart}/${env}/values.yaml "
+
+echo "options $options"
 
 nbRelease=`helm list --namespace ${env} | grep ^${release} | wc -l`
 
