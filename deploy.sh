@@ -43,7 +43,11 @@ helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/chart
 
 sops --version
 
-options="--namespace ${env} --values ${chart}/${env}/values.yaml --values ${chart}/${env}/secrets.yaml --set-string image.tag=${image}"
+options="--namespace ${env} --set-string image.tag=${image} "
+
+test -e ${chart}/${env}/secrets.yaml && options += "--values ${chart}/${env}/secrets.yaml "
+
+test -e ${chart}/${env}/secrets.yaml && options += "--values ${chart}/${env}/values.yaml "
 
 nbRelease=`helm list --namespace ${env} | grep ^${release} | wc -l`
 
