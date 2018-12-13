@@ -45,9 +45,11 @@ sops --version
 
 options="--namespace ${env} --set-string image.tag=${image} "
 
-test -e ${chart}/${env}/secrets.yaml && options += "--values ${chart}/${env}/secrets.yaml "
+test -e ${chart}/${env}/secrets.yaml && options="$options --values ${chart}/${env}/secrets.yaml "
 
-test -e ${chart}/${env}/secrets.yaml && options += "--values ${chart}/${env}/values.yaml "
+test -e ${chart}/${env}/secrets.yaml && options="$options --values ${chart}/${env}/values.yaml "
+
+echo $options
 
 nbRelease=`helm list --namespace ${env} | grep ^${release} | wc -l`
 
