@@ -57,10 +57,10 @@ options="--namespace ${env} "
 
 nbRelease=`helm list --namespace ${env} | grep ^${release} | wc -l`
 
-if [ $nbRelease=='0' ]; then
+if [ "$nbRelease" = "0" ]; then
    ${application} install --name ${release} ${options} softeamouest-opus-charts/${chart};
 fi
 
-if [ $nbRelease=='1' ]; then
+if [ "$nbRelease" = "1" ]; then
    ${application} upgrade ${release} softeamouest-opus-charts/${chart} ${options};
 fi
