@@ -35,7 +35,18 @@ podTemplate(label: 'chart-run-pod', containers: [
                     configFileProvider([configFile(fileId: 'pgp-helm', targetLocation: "secret.asc")
 
                     ]) {
-                        sh "./deploy.sh -e ${params.env} -c ${params.chart} -p ${pgp_helm_pwd} -i ${params.image}"
+
+                        String command = "./deploy.sh -p ${pgp_helm_pwd} -c ${params.chart} "
+
+                        if (params.env != '') {
+                            command += "-e ${params.env} "
+                        }
+
+                        if (params.image != '') {
+                            command += "-i ${params.image} "
+                        }
+
+                        sh "${command}"
                     }
                 }
             }
