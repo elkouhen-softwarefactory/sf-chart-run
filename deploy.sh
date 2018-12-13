@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+env="default"
+
 while getopts "e:c:i:p:" arg; do
   case $arg in
     e)
