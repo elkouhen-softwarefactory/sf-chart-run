@@ -17,8 +17,6 @@ while getopts "e:c:i:p:" arg; do
   esac
 done
 
-release="${chart}-${env}"
-
 mkdir ~/.gnupg
 chmod 700 ~/.gnupg
 
@@ -34,36 +32,35 @@ echo ${password} > key.txt
 touch dummy.txt
 gpg --batch --yes --passphrase-file key.txt --pinentry-mode=loopback -s dummy.txt # sign dummy file to unlock agent
 
-gpg --version
-gpg --list-keys
-
 helm init --client-only
 helm plugin install https://github.com/futuresimple/helm-secrets
 helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts
 
+gpg --version
 sops --version
 
 application="helm"
-options=""
 
-[ -z "$env" ] || options="$options --namespace ${env} "
+[ -z "$env" ] && release="${chart}" || release="${chart}-${env}"
+
+[ -z "$env" ] && env="default"
+
+options="--namespace ${env} "
 
 [ -z "$image" ] || options="$options --set-string image.tag=${image} "
 
-test -e ${chart}/${env}/secrets.yaml && options="$options --values ${chart}/${env}/secrets.yaml "
+[ -e ${chart}/${env}/secrets.yaml ] && options="$options --values ${chart}/${env}/secrets.yaml "
 
-test -e ${chart}/${env}/secrets.yaml && application="$application secrets"
+[ -e ${chart}/${env}/secrets.yaml ] && application="$application secrets"
 
-test -e ${chart}/${env}/values.yaml  && options="$options --values ${chart}/${env}/values.yaml "
-
-echo "options $options"
+[ -e ${chart}/${env}/values.yaml ] && options="$options --values ${chart}/${env}/values.yaml "
 
 nbRelease=`helm list --namespace ${env} | grep ^${release} | wc -l`
 
 if [ $nbRelease=='0' ]; then
-    ${application} install --name ${release} ${options} softeamouest-opus-charts/${chart};
+   ${application} install --name ${release} ${options} softeamouest-opus-charts/${chart};
 fi
 
 if [ $nbRelease=='1' ]; then
-    ${application} upgrade ${release} softeamouest-opus-charts/${chart} ${options};
+   ${application} upgrade ${release} softeamouest-opus-charts/${chart} ${options};
 fi
