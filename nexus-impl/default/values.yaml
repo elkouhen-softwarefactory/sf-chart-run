@@ -1,0 +1,32 @@
+sonatype-nexus:
+  ingress:
+    enabled: true
+    annotations:
+      certmanager.k8s.io/issuer: letsencrypt-issuer
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: registry.k8.wildwidewest.xyz
+        http:
+          paths:
+          - backend:
+              serviceName: nexus-impl-sonatype-nexus
+              servicePort: 8080
+            path: /
+      - host: nexus.k8.wildwidewest.xyz
+        http:
+          paths:
+          - backend:
+              serviceName: nexus-impl-sonatype-nexus
+              servicePort: 8080
+            path: /
+    tls:
+    - hosts:
+      - registry.k8.wildwidewest.xyz
+      - nexus.k8.wildwidewest.xyz
+      secretName: nexus-tls
+
+  nexusProxy:
+    env:
+      nexusDockerHost: registry.k8.wildwidewest.xyz
+      nexusHttpHost: nexus.k8.wildwidewest.xyz
