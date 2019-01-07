@@ -20,10 +20,10 @@ podTemplate(label: 'chart-run-pod', containers: [
 
         properties([
                 parameters([
-                        string(defaultValue: 'latest', description: 'Image Tag', name: 'image'),
-                        string(defaultValue: '', description: 'Chart Version', name: 'version'),
-                        choice(choices: charts, description: 'Chart à deployer', name: 'chart'),
-                        choice(choices: envs, description: 'Environnement de déploiement', name: 'env'),
+                        string(defaultValue: 'latest', description: 'Docker Image Tag', name: 'image'),
+                        choice(choices: charts, description: 'Helm Chart', name: 'chart'),
+                        string(defaultValue: '', description: 'Helm Chart Version', name: 'version'),
+                        choice(choices: envs, description: 'Environment', name: 'env'),
                 ])
         ])
 

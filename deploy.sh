@@ -40,7 +40,7 @@ application="helm"
 
 [ -z "$env" ] && release="${chart}" || release="${chart}-${env}"
 
-[ -z "$env" ] && env="default"
+[ -z "$env" ] && env="prod"
 
 options="--namespace ${env} "
 
