@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-while getopts "e:c:i:p:" arg; do
+while getopts "e:c:i:p:v:" arg; do
   case $arg in
     e)
       env=$OPTARG
@@ -14,17 +14,14 @@ while getopts "e:c:i:p:" arg; do
     p)
       password=$OPTARG
       ;;
+    v)
+      version=$OPTARG
+      ;;
   esac
 done
 
 mkdir ~/.gnupg
 chmod 700 ~/.gnupg
-
-#echo use-agent >> ~/.gnupg/gpg.conf
-#echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
-#echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
-
-#gpgconf --reload gpg-agent
 
 gpg --version
 sops --version
