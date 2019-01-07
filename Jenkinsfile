@@ -20,7 +20,8 @@ podTemplate(label: 'chart-run-pod', containers: [
 
         properties([
                 parameters([
-                        string(defaultValue: 'latest', description: 'Version à déployer', name: 'image'),
+                        string(defaultValue: 'latest', description: 'Image Tag', name: 'image'),
+                        string(defaultValue: '', description: 'Chart Version', name: 'version'),
                         choice(choices: charts, description: 'Chart à deployer', name: 'chart'),
                         choice(choices: envs, description: 'Environnement de déploiement', name: 'env'),
                 ])
@@ -48,6 +49,10 @@ podTemplate(label: 'chart-run-pod', containers: [
 
                         if (params.image != '') {
                             command += "-i ${params.image} "
+                        }
+
+                        if (params.image != '') {
+                            command += "-v ${params.version} "
                         }
 
                         sh "${command}"

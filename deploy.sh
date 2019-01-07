@@ -44,6 +44,8 @@ application="helm"
 
 options="--namespace ${env} "
 
+[ -z "$version" ] || options="$options --version=${version} "
+
 [ -z "$image" ] || options="$options --set-string image.tag=${image} "
 
 [ -e ${chart}/${env}/secrets.yaml ] && options="$options --values ${chart}/${env}/secrets.yaml "
