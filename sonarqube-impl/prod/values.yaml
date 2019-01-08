@@ -1,3 +1,5 @@
+environment: prod
+
 ingress:
   enabled: true
   annotations:

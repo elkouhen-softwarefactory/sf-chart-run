@@ -1,3 +1,5 @@
+environment: prod
+
 ingress:
   annotations:
     nginx.ingress.kubernetes.io/auth-secret: elasticstack-basicauthsecret

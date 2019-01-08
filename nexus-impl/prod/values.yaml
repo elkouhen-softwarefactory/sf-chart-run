@@ -1,3 +1,5 @@
+environment: prod
+
 sonatype-nexus:
   ingress:
     enabled: true
