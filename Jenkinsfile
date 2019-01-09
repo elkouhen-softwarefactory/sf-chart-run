@@ -14,7 +14,7 @@ podTemplate(label: 'chart-run-pod', containers: [
 
     node('chart-run-pod') {
 
-        def charts = ['books-api', 'books-gui', 'h2', 'grav', 'jenkins-impl', 'nexus-impl', 'sonarqube-impl', 'elasticstack']
+        def charts = ['books-api', 'books-gui', 'h2', 'grav', 'jenkins-impl', 'nexus-impl', 'sonarqube-impl', 'keycloak-impl', 'elasticstack']
 
         def envs = ['dev', 'prod']
 
