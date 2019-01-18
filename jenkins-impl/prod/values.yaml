@@ -9,9 +9,9 @@ ingress:
     kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-  - jenkins-prod.k8.wildwidewest.xyz
+  - jenkins.k8.wildwidewest.xyz
   secretName: jenkins-secret
   tls:
   - hosts:
-    - jenkins-prod.k8.wildwidewest.xyz
+    - jenkins.k8.wildwidewest.xyz
     secretName: jenkins-secret
