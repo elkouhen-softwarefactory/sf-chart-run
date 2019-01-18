@@ -34,7 +34,7 @@ gpg --batch --yes --passphrase-file key.txt --pinentry-mode=loopback -s dummy.tx
 
 helm init --client-only
 helm plugin install https://github.com/futuresimple/helm-secrets
-helm repo add softeamouest-opus-charts https://softeamouest-opus.github.io/charts
+helm repo add softeamouest-softwarefactory-charts https://softeamouest-softwarefactory.github.io/charts
 
 application="helm"
 
@@ -57,9 +57,9 @@ options="--namespace ${env} "
 nbRelease=`helm list --namespace ${env} | grep ^${release} | wc -l`
 
 if [ "$nbRelease" = "0" ]; then
-   ${application} install --name ${release} ${options} softeamouest-opus-charts/${chart};
+   ${application} install --name ${release} ${options} softeamouest-softwarefactory-charts/${chart};
 fi
 
 if [ "$nbRelease" = "1" ]; then
-   ${application} upgrade ${release} softeamouest-opus-charts/${chart} ${options};
+   ${application} upgrade ${release} softeamouest-softwarefactory-charts/${chart} ${options};
 fi
