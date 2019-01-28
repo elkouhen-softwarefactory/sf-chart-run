@@ -14,7 +14,7 @@ podTemplate(label: 'chart-run-pod', containers: [
 
     node('chart-run-pod') {
 
-        def charts = ['grav', 'jenkins-impl', 'nexus-impl', 'sonarqube-impl', 'keycloak-impl', 'elasticstack']
+        def charts = ['grav', 'jenkins-impl', 'nexus-impl', 'sonarqube-impl', 'keycloak-impl', 'postgresql-impl', 'elasticstack']
 
         def envs = ['dev', 'prod']
 
