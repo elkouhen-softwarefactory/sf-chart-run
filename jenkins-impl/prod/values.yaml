@@ -1,6 +1,5 @@
 environment: prod
 
-
 ingress:
   enabled: true
   annotations:
@@ -9,9 +8,9 @@ ingress:
     kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-  - jenkins.k8.wildwidewest.xyz
+  - jenkins-prod.k8.wildwidewest.xyz
   secretName: jenkins-secret
   tls:
   - hosts:
-    - jenkins.k8.wildwidewest.xyz
+    - jenkins-prod.k8.wildwidewest.xyz
     secretName: jenkins-secret

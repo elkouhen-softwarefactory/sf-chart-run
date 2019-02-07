@@ -1,2 +1,8 @@
-nfs:
-  server: 10.16.103.9
+environment: prod
+
+nfs.server: 10.16.103.9
+
+postgresql:
+  persistence:
+    enabled: true
+    existingClaim: data-postgresql-prod-postgresql-0
