@@ -7,5 +7,6 @@ releases:
   - name: postgresql
     namespace: prod
     chart: softeamouest-softwarefactory/postgresql-impl
+    version: ~0.0.5
     values:
       - "./values.yaml"
