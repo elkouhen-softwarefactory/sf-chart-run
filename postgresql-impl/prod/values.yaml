@@ -1,8 +1,14 @@
 environment: prod
 
-nfs.server: 10.16.103.9
+nfs:
+  server: 10.16.103.9
 
-postgresql:
-  persistence:
-    enabled: true
-    existingClaim: data-postgresql-prod-postgresql-0
+persistence:
+  enabled: true
+  existingClaim: data-postgresql-postgresql-0
+  postgresqlUsername: keycloak
+  postgresqlPassword: keycloak
+  postgresqlDatabase: keycloak
+
+pv:
+  create: false

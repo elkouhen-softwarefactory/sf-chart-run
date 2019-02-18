@@ -1,0 +1,11 @@
+repositories:
+  - name: softeamouest-softwarefactory
+    url: https://softeamouest-softwarefactory.github.io/charts
+
+releases:
+
+  - name: sonarqube
+    namespace: prod
+    chart: softeamouest-softwarefactory/sonarqube-impl
+    values:
+      - "./values.yaml"

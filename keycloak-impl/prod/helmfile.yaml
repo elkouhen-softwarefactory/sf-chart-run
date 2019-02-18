@@ -1,0 +1,19 @@
+repositories:
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com
+  - name: softeamouest-softwarefactory
+    url: https://softeamouest-softwarefactory.github.io/charts
+
+releases:
+
+  - name: keycloak
+    namespace: prod
+    chart: stable/keycloak
+    values:
+      - "./values.yaml"
+
+  - name: postgresql
+    namespace: prod
+    chart: softeamouest-softwarefactory/postgresql-impl
+    values:
+      - "../../postgresql-impl/prod/values.yaml"
