@@ -7,6 +7,7 @@ releases:
   - name: elasticstack
     namespace: prod
     chart: softeamouest-softwarefactory/elasticstack
+    version: ~0.0.8
     values:
       - "./values.yaml"
     secrets:
