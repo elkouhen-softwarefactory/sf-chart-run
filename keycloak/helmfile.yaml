@@ -17,4 +17,4 @@ releases:
     chart: softeamouest-softwarefactory/postgresql-impl
     version: ~0.0.5
     values:
-      - "../../postgresql/values.yaml"
+      - "../postgresql/values.yaml"
