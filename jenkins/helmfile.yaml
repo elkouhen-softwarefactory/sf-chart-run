@@ -6,11 +6,11 @@ repositories:
 releases:
 
   - name: jenkins
-    namespace: prod
+    namespace: dev
     chart: softwarefactory/jenkins-impl
     values:
       - "./values.yaml"
-      - namespace: prod
+      - namespace: dev
         ingress:
           enabled: true
           annotations:
