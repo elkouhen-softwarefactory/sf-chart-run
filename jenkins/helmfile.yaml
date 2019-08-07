@@ -1,7 +1,6 @@
 repositories:
   - name: softwarefactory
     url: https://elkouhen.github.io/sf-charts/
-    # url: ../../../charts/jenkins-impl
 
 releases:
 
@@ -15,7 +14,7 @@ releases:
           enabled: true
           annotations:
             kubernetes.io/ingress.class: nginx
-            certmanager.k8s.io/issuer: letsencrypt-issuer
+            certmanager.k8s.io/cluster-issuer: letsencrypt-issuer
             kubernetes.io/tls-acme: "true"
           hosts:
             - jenkins.melkouhen.net
