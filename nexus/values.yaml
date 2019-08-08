@@ -11,5 +11,5 @@ sonatype-nexus:
       kubernetes.io/tls-acme: "true"
   nexusProxy:
     env:
-      nexusDockerHost: registry.melkouhen.net
+      nexusDockerHost: registry-nexus.melkouhen.net
       nexusHttpHost: nexus.melkouhen.net
