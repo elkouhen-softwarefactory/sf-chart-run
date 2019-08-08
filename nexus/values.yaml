@@ -1,6 +1,8 @@
 environment: prod
 
 sonatype-nexus:
+  tls:
+    secretName: nexus-secret
   ingress:
     enabled: true
     annotations:
