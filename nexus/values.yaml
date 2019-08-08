@@ -9,5 +9,5 @@ sonatype-nexus:
       kubernetes.io/tls-acme: "true"
   nexusProxy:
     env:
-      nexusDockerHost: registry.k8.wildwidewest.xyz
-      nexusHttpHost: nexus.k8.wildwidewest.xyz
+      nexusDockerHost: registry.melkouhen.net
+      nexusHttpHost: nexus.melkouhen.net
