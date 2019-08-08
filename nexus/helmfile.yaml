@@ -1,11 +1,11 @@
 repositories:
-  - name: softeamouest-softwarefactory
-    url: https://softeamouest-softwarefactory.github.io/charts
+  - name: softwarefactory
+    url: https://elkouhen.github.io/sf-charts/
 
 releases:
 
   - name: nexus
     namespace: prod
-    chart: softeamouest-softwarefactory/nexus-impl
+    chart: softwarefactory/nexus-impl
     values:
       - "./values.yaml"
